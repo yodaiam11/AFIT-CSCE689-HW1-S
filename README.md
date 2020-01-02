@@ -1,1 +1,0 @@
-# AFIT-CSCE689-HW1-S

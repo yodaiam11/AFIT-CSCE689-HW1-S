@@ -1,0 +1,15 @@
+Code should compile and run straight from the github. It won't do much without your additional code.
+
+Need to install the autotools of automake and autoconf. In a debian-based linux distro (Ubuntu, etc),
+should just need to run as superuser (or use sudo):
+
+apt-get install automake
+apt-get install autoconf
+
+Then in the homework 1 directory, run autoreconf -i to have it set up the configure script and install the files it needs.
+
+Then run: ./configure to generate the makefiles.
+
+Then run: make
+
+

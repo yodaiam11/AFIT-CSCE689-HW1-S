@@ -7,7 +7,8 @@
  *
  **********************************************************************************************/
 
-#define PORT 9999 
+
+//Source for TCPClient was https://www.gnu.org/software/libc/manual/html_node/Server-Example.html
 
 TCPClient::TCPClient() {
 
@@ -30,7 +31,7 @@ TCPClient::~TCPClient() {
  **********************************************************************************************/
 
 void TCPClient::connectTo(const char *ip_addr, unsigned short port) {
-
+	//creates client socket
 	client_fileDes = socket(AF_INET, SOCK_STREAM, 0);
 	if (client_fileDes == 0)
 	{
@@ -41,7 +42,7 @@ void TCPClient::connectTo(const char *ip_addr, unsigned short port) {
 	client_add.sin_port = htons(port);
 	inet_pton(AF_INET, ip_addr, &client_add.sin_addr);
 
-	std::cout << " client socket created" << "\n";
+	std::cout << "Client socket created" << "\n";
 }
 
 /**********************************************************************************************
@@ -53,12 +54,12 @@ void TCPClient::connectTo(const char *ip_addr, unsigned short port) {
  **********************************************************************************************/
 
 void TCPClient::handleConnection() {
-
-	if (connect(client_fileDes, (struct sockaddr*) & client_add,
+	//connects to server
+	if (new_sock = connect(client_fileDes, (struct sockaddr*) & client_add,
 		sizeof(client_add)) < 0) {
 		printf("\n error : Connect Failed \n");
 	}
-	std::cout << " server connection succesfull" << "\n";
+	std::cout << "Server connection succesfull" << "\n";
 
 
 	char buf[socket_bufsize];
@@ -77,28 +78,38 @@ void TCPClient::handleConnection() {
 	else
 	{
 		printf("%s\n ", buf);
-		std::cout << " This is the client" << "\n";
-
+		
+		//client menu options
 		while (1)
 		{
 			char temp;
 			std::string s;
 			//char temp[] = "";
 			//string work = "";
-			char buffer[33];
+			char *hello = "Hello from client";
+			char buffer[1024] = {0};
 			std::cout << "\n" << "Please enter a number from the menu" << "\n\n" << "Type menu to see the options available" << "\n\n" << "User Input: ";
 			std::cin >> s;
 			std::cout << "\n";
 			//itoa(temp, buffer, 10);
 			//std::cout << s << "\n";
 
-			//int sock = 0, valread;
-			//char* hello = "Hello from client";
-			//send(sock, hello, strlen(hello), 0);
+			int sock = 0, valread;
+			
+			send(new_sock, hello, strlen(hello), 0);
 			//printf("Hello message sent\n");
 			//valread = read(sock, buffer, 1024);
 			//printf("%s\n", buffer);
 			//return 0;
+
+			//welcome message for new connection
+			//clientInp = "Yes Sir";
+			//send(new_sock, clientInp, strlen(clientInp), 0) != strlen(clientInp);
+			//if (send(new_sock, clientInp, strlen(clientInp), 0) != strlen(clientInp))
+			//{
+			//	perror("send");
+			//}
+
 
 			if (s == "exit")
 			{
@@ -106,24 +117,24 @@ void TCPClient::handleConnection() {
 			}
 			else if (s == "1")
 			{
-				std::cout << "Menu 1" << "\n\n";
+				std::cout << "Menu 1\nThe weather is going to be a combination of hot, cold, rain, snow, cloudy, or sunny." << "\n\n";
 				//handleConnection();
 			}
 			else if (s == "2")
 			{
-				std::cout << "Menu 2" << "\n\n";
+				std::cout << "Menu 2\nWhat do you call cheese that's not yours?\nNacho cheese" << "\n\n";
 			}
 			else if (s == "3")
 			{
-				std::cout << "Menu 3" << "\n\n";
+				std::cout << "Menu 3\nIt's a beautiful day in the neighborhood" << "\n\n";
 			}
 			else if (s == "4")
 			{
-				std::cout << "Menu 4" << "\n\n";
+				std::cout << "Menu 4\nIt's the song that never ends, it goes on and on my friends..." << "\n\n";
 			}
 			else if (s == "5")
 			{
-				std::cout << "Menu 5" << "\n\n";
+				std::cout << "Menu 5\nThis is your weekly test of the Server/Client connection..." << "\n\n";
 			}
 			else if (s == "passwd")
 			{
@@ -135,7 +146,7 @@ void TCPClient::handleConnection() {
 			}
 			else if (s == "menu")
 			{
-				std::cout << "Allowable commands" << "\n" << "1 - Menu 1" << "\n" << "2 - Menu 2" << "\n" << "3 - Menu 3" << "\n" << "4 - Menu 4" << "\n" << "5 - Menu 5" << "\n"
+				std::cout << "Allowable commands" << "\n" << "1 - Weather" << "\n" << "2 - Joke" << "\n" << "3 - Mr. Rodgers" << "\n" << "4 - Song" << "\n" << "5 - Test" << "\n"
 					<< "hello - greeting message" << "\n" << "passwd - for HW2" << "\n" << "exit - to disconnect" << "\n\n";
 			}
 			else

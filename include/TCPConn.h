@@ -1,7 +1,11 @@
 #ifndef TCPCONN_H
 #define TCPCONN_H
 
-#include "FileDesc.h"
+//#include "FileDesc.h"
+
+#include <string.h> 
+#include <cstring>
+#include <iostream>
 
 const int max_attempts = 2;
 
@@ -11,7 +15,7 @@ public:
    TCPConn();
    ~TCPConn();
 
-   bool accept(SocketFD &server);
+   //bool accept(SocketFD &server);
 
    int sendText(const char *msg);
    int sendText(const char *msg, int size);
@@ -30,7 +34,7 @@ public:
    void disconnect();
    bool isConnected();
 
-   unsigned long getIPAddr() { return _connfd.getIPAddr(); };
+   //unsigned long getIPAddr() { return _connfd.getIPAddr(); };
 
 private:
 
@@ -39,7 +43,7 @@ private:
 
    statustype _status = s_username;
 
-   SocketFD _connfd;
+   //SocketFD _connfd;
  
    std::string _username; // The username this connection is associated with
 
